@@ -73,8 +73,34 @@
 
 void *ndpi_tdelete(const void * __restrict, void ** __restrict,
 		   int (*)(const void *, const void *));
-void *ndpi_tfind(const void *, void *, int (*)(const void *, const void *));
-void *ndpi_tsearch(const void *, void**, int (*)(const void *, const void *));
+
+/**
+ * Search a binary space tree "vrootp" for a match to "vkey" using the comparator
+ * function "compar".  Returns a ndpi_node object if a match is found.
+ *
+ * NOTE: The first variable in the ndpi_node object is the element "key" which is a pointer
+ * to the key object the ndpi_node encapsulates.  The ndpiReader source routinely dereferences the
+ * returned pointer to the ndpi_node object as if it was a pointer to a pointer to obtain the
+ * "key" element as opposed to simply derefernceing ret->key.
+ *
+ * @param vkey An opaque pointer passed to compar
+ * @param vrootp  The address of a pointer that the tsearch system will use to store the root element of the tree
+ * @param compar A function that determines if obj1 is more than, less than, or equal to obj2.
+ * @return Returns the match as an ndpi_node object if any is found.
+ */
+void *ndpi_tfind(const void *vkey, void *vrootp, int (*compar)(const void *obj1, const void *obj2));
+
+/**
+ * Search a binary space tree "vrootp" for object "vkey" using the comparator function "compar".  Returns the match if it finds it.
+ * Adds it to the btree if it doesn't.  To initialize the btree, pass a pointer to NULL as vrootp.  The pointer will be filled in
+ * with the newly allocated root element.
+ *
+ * @param vkey An opaque pointer passed to compar
+ * @param vrootp  The address of a pointer that the tsearch system will use to store the root element of the tree.
+ * @param compar A function that determines if obj1 is more than, less than, or equal to obj2.
+ * @return Returns the existing ndpi_node object if it's found or the newly allocated ndpi_node if not.
+ */
+void *ndpi_tsearch(const void *vkey, void**vrootkey, int (*compar)(const void *, const void *));
 void ndpi_twalk(const void *, void (*)(const void *, ndpi_VISIT, int, void*), void *user_data);
 void ndpi_tdestroy(void *vrootp, void (*freefct)(void *));
 

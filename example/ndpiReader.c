@@ -700,8 +700,13 @@ static int node_cmp(const void *a, const void *b) {
   return(0);
 }
 
-/* ***************************************************** */
-
+/**
+ * Searched the per thread btrees stored in ndpi_thread_info[thread_id].ndpi_flows_root for
+ * a matching ndpi_flow structure. Create the entry if it doesn't exist.
+ * @param src Is set to the flow->src_id pointer
+ * @param dst Is set to the flow->dst_id pointer
+ * @return Returns the flow that was found/created.  May return NULL on malloc failure.
+ */
 static struct ndpi_flow *get_ndpi_flow(u_int16_t thread_id,
 				       const u_int8_t version,
 				       u_int16_t vlan_id,

@@ -119,8 +119,8 @@ extern "C" {
    * @param packet the packet as unsigned char pointer with the length of packetlen. the pointer must point to the Layer 3 (IP header)
    * @param packetlen the length of the packet
    * @param current_tick the current timestamp for the packet
-   * @param src void pointer to the source subscriber state machine
-   * @param dst void pointer to the destination subscriber state machine
+   * @param src void pointer to the source subscriber state machine, copied to flow->src
+   * @param dst void pointer to the destination subscriber state machine, copied to flow->dst
    * @return returns the detected ID of the protocol
    */
   ndpi_protocol ndpi_detection_process_packet(struct ndpi_detection_module_struct *ndpi_struct,
