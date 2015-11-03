@@ -28,3 +28,5 @@ ndpi_get_proto_breed_name
 ndpi_get_proto_by_id
 ndpi_get_protocol_id_master_proto
 ndpi_guess_protocol_id
+ndpi_match_host_subprotocol
+ndpi_host_ptree_match
