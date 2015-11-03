@@ -63,7 +63,10 @@ extern "C" {
   u_int16_t ndpi_network_ptree_match(struct ndpi_detection_module_struct *ndpi_struct, struct in_addr *pin);
 
   /**
-   * Same as ndpi_network_ptree_match
+   * Returns the nDPI protocol id assocated with the ip in host
+   * @param ndpi_struct The detection module
+   * @param host The host ip in network byte order
+   * @return Returns a matching protocol number or return NDPI_PROTOCOL_UNKNOWN
    */
   u_int16_t ndpi_host_ptree_match(struct ndpi_detection_module_struct *ndpi_struct, u_int32_t host);
 
@@ -173,6 +176,16 @@ extern "C" {
 					      u_int8_t proto, u_int32_t shost, u_int16_t sport, u_int32_t dhost, u_int16_t dport);
   ndpi_protocol ndpi_guess_undetected_protocol(struct ndpi_detection_module_struct *ndpi_struct,
 					       u_int8_t proto, u_int32_t shost, u_int16_t sport, u_int32_t dhost, u_int16_t dport);
+  
+  /**
+   * Returns a subprotocol number by comparing the string_to_match with a table of hostnames that are known to be associated with specific protocols.
+   * @param ndpi_struct The detection module
+   * @param flow The flow we're matching.  This isn't very important and can be dummied up.  The function will update detected_protocol_stack if it finds a match
+   * @param string_to_match The string we're going to match the list of partial hostnames against.  We'll find matches anywhere, beginning, middle or end.
+   * @param string_to_match_len The number of bytes to compare against string_to_match.
+   * @param master_protocol_id The id of the encapsulating protocol.  Used to update detected_protocol_stack in the flow if a subprotocol match is found.
+   * @return The id of the detected subprotocol or NDPI_PROTOCOL_UNKNOWN if no match is found.
+   */
   int ndpi_match_host_subprotocol(struct ndpi_detection_module_struct *ndpi_struct,
 				  struct ndpi_flow_struct *flow, char *string_to_match, u_int string_to_match_len,
 				  u_int16_t master_protocol_id);
