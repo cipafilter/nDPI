@@ -46,3 +46,5 @@ ndpi_match_string
 set_ndpi_malloc
 set_ndpi_free
 set_ndpi_debug_function
+ndpi_match_host_subprotocol
+ndpi_network_ptree_match
